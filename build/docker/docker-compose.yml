@@ -1,0 +1,37 @@
+---
+version: "2"
+services:
+  wallet:
+    container_name: wallet
+    build:
+      context: ../../
+      dockerfile: ./build/docker/Dockerfile
+    depends_on:
+      - mysql
+    env_file:
+      - ./../../.env
+    ports:
+      - 80:80
+    volumes:
+      - ../../:/go/src/wallet
+    environment:
+      - GO111MODULE=on
+      - MYSQL_DSN=mysql://root:root@tcp(mysql:3306)/wallet?parseTime=true
+    networks:
+      wallet:
+        aliases:
+          - wallet.test
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: wallet
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./../../var/db.sql:/db.sql
+    networks:
+      - wallet
+networks:
+  wallet:
