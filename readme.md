@@ -34,7 +34,7 @@
 
 #### Application design
 
-In order to organize application files I used [Multitier architecture]([https://pages.github.com/](https://en.wikipedia.org/wiki/Multitier_architecture)https://en.wikipedia.org/wiki/Multitier_architecture) with four layers:
+In order to organize application files I used [Multitier architecture](https://en.wikipedia.org/wiki/Multitier_architecture) with four layers:
 - `ui` - "User interface". Stores HTTP, CLI, etc.. handlers
 - `application` - Application services. Basically they orchestrate execution of certain process like funding wallet. (They do not contain business logic).
 - `domain` - Heart of the application. Contains domain models (`wallet`, `transaction`), domain logic / domain services.
