@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "b4a3ee9a-bc42-4490-91cf-33b2d1aecf2f",
+		"name": "Wallet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1322277"
+	},
+	"item": [
+		{
+			"name": "Create wallet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"owner_id\": \"usr-AAaPeAqXYSTsuHqbOAyoLagvYxij\",\n    \"currency\": \"eur\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://wallet.test/wallets",
+					"protocol": "http",
+					"host": [
+						"wallet",
+						"test"
+					],
+					"path": [
+						"wallets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fund wallet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 100,\n    \"type\": \"bank_deposit\",\n    \"origin_id\": \"ch-aAAwVnWmJYQVpeCkPGMdOubktYVRA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://wallet.test/wallets/wal-oyhwcmVkUaHGnsLFxdzhpaDINaAA/fund",
+					"protocol": "http",
+					"host": [
+						"wallet",
+						"test"
+					],
+					"path": [
+						"wallets",
+						"wal-oyhwcmVkUaHGnsLFxdzhpaDINaAA",
+						"fund"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Spend wallet funds",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 100,\n    \"type\": \"bank_deposit\",\n    \"origin_id\": \"ch-aAAwVnWmJYQVpeCkPGMdOubktYVRA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://wallet.test/wallets/wal-oyhwcmVkUaHGnsLFxdzhpaDINaAA/fund",
+					"protocol": "http",
+					"host": [
+						"wallet",
+						"test"
+					],
+					"path": [
+						"wallets",
+						"wal-oyhwcmVkUaHGnsLFxdzhpaDINaAA",
+						"fund"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get wallet",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://wallet.test/wallets/wal-xvNjKbgjMIchWTzqHZrkXdELYbzX",
+					"protocol": "http",
+					"host": [
+						"wallet",
+						"test"
+					],
+					"path": [
+						"wallets",
+						"wal-xvNjKbgjMIchWTzqHZrkXdELYbzX"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
