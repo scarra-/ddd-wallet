@@ -16,24 +16,24 @@ var (
 )
 
 type Wallet struct {
-	incrementalId int    `gorm:"column:incremental_id;primarykey"`
-	id            string `gorm:"column:id"`
-	ownerId       string `gorm:"column:owner_id"`
+	IncrementalId int    `gorm:"column:incremental_id;primarykey"`
+	Id            string `gorm:"column:id"`
+	OwnerId       string `gorm:"column:owner_id"`
 
-	balance  int    `gorm:"column:balance;not null"`
-	currency string `gorm:"column:currency;not null"`
+	Balance  int    `gorm:"column:balance;not null"`
+	Currency string `gorm:"column:currency;not null"`
 
-	createdAt time.Time      `gorm:"column:created_at"`
-	updatedAt time.Time      `gorm:"column:updated_at"`
-	deletedAt gorm.DeletedAt `gorm:"column:deleted_at;index"`
+	CreatedAt time.Time      `gorm:"column:created_at"`
+	UpdatedAt time.Time      `gorm:"column:updated_at"`
+	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;index"`
 }
 
 func NewWallet(ownerId, currency string) *Wallet {
 	return &Wallet{
-		id:       "wal-" + utils.RandomKey(28),
-		ownerId:  ownerId,
-		balance:  0,
-		currency: currency,
+		Id:       "wal-" + utils.RandomKey(28),
+		OwnerId:  ownerId,
+		Balance:  0,
+		Currency: currency,
 	}
 }
 
@@ -46,8 +46,8 @@ func (w *Wallet) Fund(txChecker *TxChecker, amount int, source *FundSource) (*Tr
 		return nil, OriginIdAlreadyUsed
 	}
 
-	w.balance += amount
-	w.updatedAt = time.Now()
+	w.Balance += amount
+	w.UpdatedAt = time.Now()
 
 	tx := newFundTransaction(w, amount, source)
 
@@ -59,7 +59,7 @@ func (w *Wallet) Spend(txChecker *TxChecker, amount int, source *SpendSource) (*
 		return nil, InvalidAmount
 	}
 
-	if 0 > (w.balance - amount) {
+	if 0 > (w.Balance - amount) {
 		return nil, InsufficientFunds
 	}
 
@@ -67,34 +67,10 @@ func (w *Wallet) Spend(txChecker *TxChecker, amount int, source *SpendSource) (*
 		return nil, OriginIdAlreadyUsed
 	}
 
-	w.balance -= amount
-	w.updatedAt = time.Now()
+	w.Balance -= amount
+	w.UpdatedAt = time.Now()
 
 	tx := newSpendTransaction(w, amount, source)
 
 	return tx, nil
-}
-
-func (w *Wallet) Id() string {
-	return w.id
-}
-
-func (w *Wallet) OwnerId() string {
-	return w.ownerId
-}
-
-func (w *Wallet) Balance() int {
-	return w.balance
-}
-
-func (w *Wallet) Currency() string {
-	return w.currency
-}
-
-func (w *Wallet) CreatedAt() time.Time {
-	return w.createdAt
-}
-
-func (w *Wallet) UpdatedAt() time.Time {
-	return w.updatedAt
 }

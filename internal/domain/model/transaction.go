@@ -13,59 +13,35 @@ var (
 )
 
 type Transaction struct {
-	incrementalId int    `gorm:"column:incremental_id;primarykey"`
-	id            string `gorm:"column:id"`
-	walletId      string `gorm:"column:wallet_id"`
-	amount        int    `gorm:"column:amount;not null"`
-	txType        string `gorm:"column:type;not null"`
-	originId      string `gorm:"column:origin_id"`
+	IncrementalId int    `gorm:"column:incremental_id;primarykey"`
+	Id            string `gorm:"column:id"`
+	WalletId      string `gorm:"column:wallet_id"`
+	Amount        int    `gorm:"column:amount;not null"`
+	TxType        string `gorm:"column:type;not null"`
+	OriginId      string `gorm:"column:origin_id"`
 
-	createdAt time.Time      `gorm:"column:created_at"`
-	deletedAt gorm.DeletedAt `gorm:"column:deleted_at;index"`
+	CreatedAt time.Time      `gorm:"column:created_at"`
+	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;index"`
 }
 
 func newFundTransaction(wallet *Wallet, amount int, source *FundSource) *Transaction {
 	return &Transaction{
-		id:       "tx-" + utils.RandomKey(29),
-		walletId: wallet.Id(),
-		amount:   amount,
-		txType:   source.Type,
-		originId: source.OriginId,
+		Id:       "tx-" + utils.RandomKey(29),
+		WalletId: wallet.Id,
+		Amount:   amount,
+		TxType:   source.Type,
+		OriginId: source.OriginId,
 	}
 }
 
 func newSpendTransaction(wallet *Wallet, amount int, source *SpendSource) *Transaction {
 	return &Transaction{
-		id:       "tx-" + utils.RandomKey(29),
-		walletId: wallet.Id(),
-		amount:   amount * (-1), // Tx will be negative.
-		txType:   source.Type,
-		originId: source.OriginId,
+		Id:       "tx-" + utils.RandomKey(29),
+		WalletId: wallet.Id,
+		Amount:   amount * (-1), // Tx will be negative.
+		TxType:   source.Type,
+		OriginId: source.OriginId,
 	}
-}
-
-func (t *Transaction) Id() string {
-	return t.id
-}
-
-func (t *Transaction) WalletId() string {
-	return t.walletId
-}
-
-func (t *Transaction) Amount() int {
-	return t.amount
-}
-
-func (t *Transaction) Type() string {
-	return t.txType
-}
-
-func (t *Transaction) OriginId() string {
-	return t.originId
-}
-
-func (t *Transaction) CreatedAt() time.Time {
-	return t.createdAt
 }
 
 type TxRepo interface {

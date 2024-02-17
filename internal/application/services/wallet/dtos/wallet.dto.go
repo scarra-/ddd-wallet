@@ -36,11 +36,11 @@ type WalletResponseDto struct {
 
 func NewWalletResponseDto(w *domain.Wallet) *WalletResponseDto {
 	return &WalletResponseDto{
-		Id:        w.Id(),
-		OwnerId:   w.OwnerId(),
-		Balance:   w.Balance(),
-		Currency:  w.Currency(),
-		UpdatedAt: w.UpdatedAt(),
-		CreatedAt: w.CreatedAt(),
+		Id:        w.Id,
+		OwnerId:   w.OwnerId,
+		Balance:   w.Balance,
+		Currency:  w.Currency,
+		UpdatedAt: w.UpdatedAt,
+		CreatedAt: w.CreatedAt,
 	}
 }

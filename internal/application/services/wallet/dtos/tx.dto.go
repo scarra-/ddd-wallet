@@ -17,11 +17,11 @@ type TxResponseDto struct {
 
 func NewTxResponseDto(tx *domain.Transaction) *TxResponseDto {
 	return &TxResponseDto{
-		Id:        tx.Id(),
-		WalletId:  tx.WalletId(),
-		Amount:    tx.Amount(),
-		Type:      tx.Type(),
-		OriginId:  tx.OriginId(),
-		CreatedAt: tx.CreatedAt(),
+		Id:        tx.Id,
+		WalletId:  tx.WalletId,
+		Amount:    tx.Amount,
+		Type:      tx.TxType,
+		OriginId:  tx.OriginId,
+		CreatedAt: tx.CreatedAt,
 	}
 }

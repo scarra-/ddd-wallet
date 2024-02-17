@@ -18,21 +18,18 @@ func NewWalletRepository(db *gorm.DB) *WalletRepository {
 }
 
 func (repo *WalletRepository) Save(wallet *domain.Wallet) error {
-	return repo.db.Save(wallet).Error
+	repo.db.Save(wallet)
+	return repo.db.Error
 }
 
 func (repo *WalletRepository) OfId(id string) (*domain.Wallet, error) {
 	var w domain.Wallet
-	err := repo.db.Where("id = ?", id).First(&w).Error
-
-	if err != nil {
-		if err == gorm.ErrRecordNotFound {
+	if err := repo.db.Where("id = ?", id).First(&w).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, domain.WalletNotFound
 		}
-
 		return nil, err
 	}
-
 	return &w, nil
 }
 
