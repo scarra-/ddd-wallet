@@ -23,7 +23,7 @@ func (r *txRepoStub) OfOriginId(id string) (*d.Transaction, error) {
 func TestFundWallet(t *testing.T) {
 	t.Run("create and fund wallet", func(t *testing.T) {
 		wallet := d.NewWallet("usr-AAaPeAqXYSTsuHqbOAyoLagvYxij", "eur")
-		assert.Equal(t, 0, wallet.Balance())
+		assert.Equal(t, 0, wallet.Balance)
 
 		source := d.NewFundSource("card_deposit", "ch-aAAwVnWmJYQVpeCkPGMdOubktYVA6")
 
@@ -31,15 +31,15 @@ func TestFundWallet(t *testing.T) {
 		tx, err := wallet.Fund(txChecker, 100, source)
 		assert.Nil(t, err)
 
-		assert.Equal(t, wallet.Id(), tx.WalletId())
-		assert.Equal(t, 100, tx.Amount())
-		assert.Equal(t, "card_deposit", tx.Type())
-		assert.Equal(t, source.OriginId, tx.OriginId())
-		assert.Equal(t, 100, wallet.Balance())
+		assert.Equal(t, wallet.Id, tx.WalletId)
+		assert.Equal(t, 100, tx.Amount)
+		assert.Equal(t, "card_deposit", tx.TxType)
+		assert.Equal(t, source.OriginId, tx.OriginId)
+		assert.Equal(t, 100, wallet.Balance)
 
 		txChecker = d.NewTxChecker(&txRepoStub{recordFound: false})
 		wallet.Fund(txChecker, 200, source)
-		assert.Equal(t, 300, wallet.Balance())
+		assert.Equal(t, 300, wallet.Balance)
 	})
 
 	t.Run("double fund wallet with same origin", func(t *testing.T) {
@@ -78,21 +78,21 @@ func TestSpendWalletFunds(t *testing.T) {
 		tx, err := wallet.Spend(txChecker, 50, spendSource)
 		assert.Nil(t, err)
 
-		assert.Equal(t, wallet.Id(), tx.WalletId())
-		assert.Equal(t, -50, tx.Amount())
-		assert.Equal(t, "card_deposit", tx.Type())
-		assert.Equal(t, spendSource.OriginId, tx.OriginId())
-		assert.Equal(t, 50, wallet.Balance())
+		assert.Equal(t, wallet.Id, tx.WalletId)
+		assert.Equal(t, -50, tx.Amount)
+		assert.Equal(t, "card_deposit", tx.TxType)
+		assert.Equal(t, spendSource.OriginId, tx.OriginId)
+		assert.Equal(t, 50, wallet.Balance)
 
 		tx, err = wallet.Spend(txChecker, 40, spendSource)
 		assert.Nil(t, err)
-		assert.Equal(t, -40, tx.Amount())
-		assert.Equal(t, 10, wallet.Balance())
+		assert.Equal(t, -40, tx.Amount)
+		assert.Equal(t, 10, wallet.Balance)
 
 		tx, err = wallet.Spend(txChecker, 10, spendSource)
 		assert.Nil(t, err)
-		assert.Equal(t, -10, tx.Amount())
-		assert.Equal(t, 0, wallet.Balance())
+		assert.Equal(t, -10, tx.Amount)
+		assert.Equal(t, 0, wallet.Balance)
 	})
 
 	t.Run("double spend wallet funds", func(t *testing.T) {
