@@ -40,7 +40,9 @@ In order to organize application files I used [Multitier architecture]([https://
 - `domain` - Heart of the application. Contains domain models (`wallet`, `transaction`), domain logic / domain services.
 - `infrastructure` - framework code, DB respositories etc..
 
-Business logic is structured using [Domain Driven Desing](https://www.amazon.com/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577)https://www.amazon.com/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577.
+#### Business logic design
+
+Business logic is structured using [Domain Driven Desing](https://www.amazon.com/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577).
 `Wallet.go` domain model stores all invariants. This comes handy when you want learn about business rules (domain layer code could be read like a book).
 
 #### API
