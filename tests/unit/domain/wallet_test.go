@@ -126,19 +126,6 @@ func TestSpendWalletFunds(t *testing.T) {
 		assert.ErrorIs(t, err, d.InvalidAmount)
 	})
 
-	t.Run("spend wallet funds with invalid amount", func(t *testing.T) {
-		wallet := d.NewWallet("usr-AAaPeAqXYSTsuHqbOAyoLagvYxij", "eur")
-		fundSource := d.NewFundSource("card_deposit", "ch-aAAwVnWmJYQVpeCkPGMdOubktYVA6")
-		spendSource := d.NewSpendSource("card_deposit", "ch-aAAwVnWmJYQVpeCkPGMdOubktYVA1")
-
-		txChecker := d.NewTxChecker(&txRepoStub{recordFound: false})
-		wallet.Fund(txChecker, 100, fundSource)
-
-		tx, err := wallet.Spend(txChecker, -50, spendSource)
-		assert.Nil(t, tx)
-		assert.ErrorIs(t, err, d.InvalidAmount)
-	})
-
 	t.Run("insufficient wallet funds", func(t *testing.T) {
 		wallet := d.NewWallet("usr-AAaPeAqXYSTsuHqbOAyoLagvYxij", "eur")
 		fundSource := d.NewFundSource("card_deposit", "ch-aAAwVnWmJYQVpeCkPGMdOubktYVA6")
