@@ -3,7 +3,7 @@
 #### Installation
 
 1. Clone repository locally
-2. Create `.env` file (copy from `.env.example`)
+2. Create `.env` file: `cp .env.example .env`
 3. Run `make dcu`. This command will run full `docker-compose.yml` and start Go wallet service.
 4. Run `make migrate` in order to run DB migrations.
 5. Add `127.0.0.1 wallet.test` to `/etc/hosts` file. 
