@@ -36,14 +36,32 @@
 
 In order to organize application files I used [Multitier architecture](https://en.wikipedia.org/wiki/Multitier_architecture) with four layers:
 - `ui` - "User interface". Stores HTTP, CLI, etc.. handlers
-- `application` - Application services. Basically they orchestrate execution of certain process like funding wallet. (They do not contain business logic).
+- `application` - Application services. Basically they orchestrate execution of certain process like funding wallet. (They do not contain business logic, just route).
 - `domain` - Heart of the application. Contains domain models (`wallet`, `transaction`), domain logic / domain services.
-- `infrastructure` - framework code, DB respositories etc..
+- `infrastructure` - Framework code, DB respositories etc..
 
 #### Business logic design
 
 Business logic is structured using [Domain Driven Desing](https://www.amazon.com/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577).
 `Wallet.go` domain model stores all invariants. This comes handy when you want learn about business rules (domain layer code could be read like a book).
+
+#### Domain model (core business logic)
+
+`Wallet` contains two main functions:
+- `Fund`
+   1. Checks if amount is positive.
+   2. Checks if operation is not duplicate (by querying transactions with same originId)
+   3. Adjusts balance
+   4. Creates `fund` transaction.
+- `Spend`
+   1. Checks if amount is positive.
+   2. Checks if wallet has sufficient funds.
+   3. Checks if operation is not duplicate (by querying transactions with same originId).
+   4. Adjusts balance
+   5. Creates `spend` transaction.
+ 
+Transactions act as a log/receipt/idempotency mechanism for a wallet. Even though wallet has `balance` integer field - it in theory can be replayed using transactions as they contain history of wallet state changes.
+
 
 #### API
 Import Postman collection `./postman.json`
