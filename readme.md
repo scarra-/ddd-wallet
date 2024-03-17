@@ -1,4 +1,6 @@
-### Wallet app written in Golang
+### Domain driven design Wallet app written in Golang
+- DDD
+- Multitier architecture
 
 #### Installation
 
